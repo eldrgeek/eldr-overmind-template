@@ -19,22 +19,23 @@ const initialize = () => {
   // console.log('running iniializer');
   // debugger;
   app = createOvermind(config, {
-    devtools: true, // 'localhost:8080',
+    devtools: 'localhost:8080',
   });
   // if (app.dispose) app.dispose();
 
   // app.dispose = () => effects.storage.saveLocalAttributes(config.state);
-  state.localAttributes.split(',').forEach(
-    attr =>
-      app.reaction(
-        ({ testValue }) => testValue,
-        //Fix bug passing fragments
-        testValue => {
-          effects.storage.saveLocalAttribute('testValue', testValue);
-        }
-      )
-    // { nested: true }
-  );
+  if (state.devState.saveLocals)
+    state.devState.localAttributes.split(',').forEach(
+      attr =>
+        app.reaction(
+          ({ testValue }) => testValue,
+          //Fix bug passing fragments
+          testValue => {
+            effects.storage.saveLocalAttribute('testValue', testValue);
+          }
+        )
+      // { nested: true }
+    );
   useApp = createHook();
 };
 

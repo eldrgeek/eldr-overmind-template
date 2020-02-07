@@ -6,7 +6,8 @@ const App = () => {
     <React.Fragment>
       <section className="todoapp">
         <header className="header">
-          <h1>{state.testValue} </h1>
+          <h1>Template </h1>
+          <h2>{state.testValue} </h2>
         </header>
         {/* <MediaPlayer />
 

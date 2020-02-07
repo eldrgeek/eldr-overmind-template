@@ -1,6 +1,10 @@
 export const state = {
   title: 'The application title',
-  localAttributes: 'testValue',
-  testValue: 'this',
+  devState: {
+    localAttributes: 'testValue',
+    restoreLocals: false,
+    saveLocals: false,
+  },
+  testValue: 'test value',
   logValues: [],
 };

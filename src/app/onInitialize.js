@@ -1,7 +1,8 @@
 export const onInitialize = ({ state, actions, effects }, instance) => {
-  state.localAttributes
-    .split(',')
-    .forEach(attr => (state[attr] = effects.storage.getLocalAttribute(attr)));
+  if (state.devState.restoreLocal)
+    state.localAttributes
+      .split(',')
+      .forEach(attr => (state[attr] = effects.storage.getLocalAttribute(attr)));
 
   // console.log('on initializw');
 
