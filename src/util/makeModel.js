@@ -1,10 +1,13 @@
-const makeModel = (srcFile, moduleName) => {
+const makeModel = moduleName => {
+  const srcFile = '/src/components/Template.jsx';
   const fs = require('fs');
-  let file = fs.readFileSync(file).toString();
-  console.log(file);
+  console.log(fs.writeFileSync);
+  console.log(srcFile);
+  let file = fs.readFileSync(srcFile).toString();
+  // console.log(file);
 
-  let modFile = file.replace(/ZModel/gm, moduleName);
+  let modFile = file.replace(/Template/gm, moduleName);
   console.log(modFile);
 };
 
-makeModel('/src/components/ZModel.jsx', 'myFile');
+makeModel('myFile');

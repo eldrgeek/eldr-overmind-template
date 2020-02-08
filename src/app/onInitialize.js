@@ -1,10 +1,11 @@
+console.log('on initialize');
 export const onInitialize = ({ state, actions, effects }, instance) => {
-  if (state.devState.restoreLocal)
-    state.localAttributes
-      .split(',')
-      .forEach(attr => (state[attr] = effects.storage.getLocalAttribute(attr)));
-
-  // console.log('on initializw');
+  const attributes = state.stateAttributes || Object.keys(state).join(',');
+  if (state.devState.restoreState)
+    attributes.split(',').forEach(attr => {
+      console.log('resotred ' + attr);
+      state[attr] = effects.storage.getLocalAttribute(attr);
+    });
 
   // effects.router.initialize({
   //   // '/': () => actions.changeFilter('all'),
@@ -12,4 +13,3 @@ export const onInitialize = ({ state, actions, effects }, instance) => {
   //   // '/completed': () => actions.changeFilter('completed'),
   // });
 };
-//

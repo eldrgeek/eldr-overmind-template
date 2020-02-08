@@ -7,7 +7,7 @@ import { createOvermind } from 'overmind';
 
 export let useApp;
 export let app;
-// console.log('loading index');
+console.log('loading index');
 const config = {
   onInitialize,
   state,
@@ -19,23 +19,27 @@ const initialize = () => {
   // console.log('running iniializer');
   // debugger;
   app = createOvermind(config, {
-    devtools: 'localhost:8080',
+    // devtools: 'penguin.linux.test:8080', //  'localhost:8080',
   });
   // if (app.dispose) app.dispose();
 
   // app.dispose = () => effects.storage.saveLocalAttributes(config.state);
-  if (state.devState.saveLocals)
-    state.devState.localAttributes.split(',').forEach(
+  if (state.devState.saveState) {
+    const attributes = state.stateAttributes || Object.keys(state).join(',');
+
+    attributes.split(',').forEach(
       attr =>
         app.reaction(
           ({ testValue }) => testValue,
           //Fix bug passing fragments
           testValue => {
+            console.log('saved ' + attr);
             effects.storage.saveLocalAttribute('testValue', testValue);
           }
         )
       // { nested: true }
     );
+  }
   useApp = createHook();
 };
 

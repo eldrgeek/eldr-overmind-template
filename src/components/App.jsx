@@ -1,4 +1,7 @@
 import { CurrentModule, React, useApp } from '../CurrentModule';
+import 'todomvc-common/base.css';
+import 'todomvc-app-css/index.css';
+import Title from './Title';
 const App = () => {
   const { state, actions } = useApp();
 
@@ -6,7 +9,7 @@ const App = () => {
     <React.Fragment>
       <section className="todoapp">
         <header className="header">
-          <h1>Template </h1>
+          <Title />
           <h2>{state.testValue} </h2>
         </header>
         {/* <MediaPlayer />

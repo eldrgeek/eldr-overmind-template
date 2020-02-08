@@ -1,5 +1,5 @@
 // import page from 'page';
-// console.log('loading effects!');
+console.log('loading effects!');
 export const storage = (() => {
   return {
     initialize(state) {},
