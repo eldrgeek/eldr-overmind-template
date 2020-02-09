@@ -4,7 +4,7 @@ const Title = () => {
 
   return (
     <React.Fragment>
-      <h1>Template</h1>
+      <h1>The Template</h1>
     </React.Fragment>
   );
 };

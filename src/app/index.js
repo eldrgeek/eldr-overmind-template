@@ -4,6 +4,8 @@ import { onInitialize } from './onInitialize';
 import * as actions from './actions';
 import * as effects from './effects';
 import { createOvermind } from 'overmind';
+import doAttrs from './doAttrs';
+// import { VALUE } from 'proxy-state-tree';
 
 export let useApp;
 export let app;
@@ -16,45 +18,49 @@ const config = {
 };
 
 const initialize = () => {
-  // console.log('running iniializer');
-  // debugger;
   app = createOvermind(config, {
-    // devtools: 'penguin.linux.test:8080', //  'localhost:8080',
+    devtools: 'penguin.linux.test:8080', //  'localhost:8080',
   });
   // if (app.dispose) app.dispose();
+  useApp = createHook();
 
   // app.dispose = () => effects.storage.saveLocalAttributes(config.state);
-  if (state.devState.saveState) {
-    const attributes = state.stateAttributes || Object.keys(state).join(',');
-
-    attributes.split(',').forEach(
-      attr =>
-        app.reaction(
-          ({ testValue }) => testValue,
-          //Fix bug passing fragments
-          testValue => {
-            console.log('saved ' + attr);
-            effects.storage.saveLocalAttribute('testValue', testValue);
-          }
-        )
-      // { nested: true }
+  const reactAttr = attr =>
+    app.reaction(
+      state => state[attr],
+      //Fix bug passing fragments
+      value => {
+        console.log('saved ' + attr, value);
+        effects.storage.saveLocalAttribute(attr, value);
+      }
     );
-  }
-  useApp = createHook();
+  // { nested: true }
+
+  doAttrs(config.state, 'saveState', reactAttr);
 };
 
-// if (!module.hot) {
 initialize();
-// } else {}
-//   module.hot.dispose(data => {
-//     data.app = app;
-//     data.useApp = useApp;
-//   });
 
+// const errorHandler = e => {
+//   debugger;
+//   console.log('Hot module error');
+// };
+// if (!module.hot) {
+//   console.log("not hot")
+//   initialize();
+// } else {
 //   if (!module.hot.data) {
-//     initialize()
+//     console.log("no hot data")
+//     initialize();
+//     module.hot.dispose(data => {
+//       console.log('setting up dispoase');
+//       data.app = app;
+//       data.useApp = useApp;
+//     });
 //   } else {
+//     console.log('restoring what was disposed');
 //     app = module.hot.data.app;
 //     useApp = module.hot.data.useApp;
+//     // module.hot.accept(errorHandler);
 //   }
 // }
